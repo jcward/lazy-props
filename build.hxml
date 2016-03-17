@@ -1,0 +1,5 @@
+-main Main
+-neko bin/test.n
+
+--next
+-cmd neko bin/test.n
