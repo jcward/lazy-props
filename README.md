@@ -6,7 +6,7 @@ Haxe lazy (less typing) property definition macro
 
 Motivation described in the writeup here: [jcward.com/Less+Glue+via+Haxe+Macro+Lazy+Props](http://jcward.com/Less+Glue+via+Haxe+Macro+Lazy+Props)
 
-Declare & assign class properties automatically based on constructor:
+Declares and assigns class properties automatically based on constructor:
 ![less_glue](https://cloud.githubusercontent.com/assets/2192439/13889013/f779165e-ed09-11e5-8ce4-0aa02a190623.jpg)
 
 Supported metadata tags:
