@@ -1,8 +1,8 @@
 @:build(LazyProps.build())
 class Main {
   public static function main() {
-    new Greeter("John").greet();
-    new PoliteGreeter("Warmest greetings", "John").greet();
+    new Greeter("Jeff").greet();
+    new PoliteGreeter("Warmest greetings", "Jeff").greet();
   }
 }
 

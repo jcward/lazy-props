@@ -182,3 +182,18 @@ class LazyProps {
     return fields;
   }
 }
+
+
+@:prop()
+@:propPublic()
+@:propPrivate()
+@:propPublicGetSet()
+@:propPrivateGetSet()
+@:propPublicReadOnly()
+@:propPublicWriteOnly()
+@:propPublicGetOnly()
+@:propPublicSetOnly()
+@:propPrivateReadOnly()
+@:propPrivateWriteOnly()
+@:propPrivateGetOnly()
+@:propPrivateSetOnly()

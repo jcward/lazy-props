@@ -1,3 +1,5 @@
+-cp src
+-cp test
 -main Main
 -neko bin/test.n
 
