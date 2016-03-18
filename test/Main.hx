@@ -1,4 +1,3 @@
-@:build(LazyProps.build())
 class Main {
   public static function main() {
     new Greeter("Jeff").greet();
