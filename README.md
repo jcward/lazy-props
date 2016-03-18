@@ -2,7 +2,7 @@
 
 Haxe lazy (less typing) property definition macro
 
-See the writeup here: [jcward.com/Less+Glue+via+Haxe+Macro+Lazy+Props](http://jcward.com/Less+Glue+via+Haxe+Macro+Lazy+Props)
+Motivation described in the writeup here: [jcward.com/Less+Glue+via+Haxe+Macro+Lazy+Props](http://jcward.com/Less+Glue+via+Haxe+Macro+Lazy+Props)
 
 Supported metadata tags:
 -------------------------
