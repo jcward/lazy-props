@@ -1,7 +1,8 @@
+<img align="right" src="https://cloud.githubusercontent.com/assets/2192439/13888490/5b058872-ed07-11e5-8244-931d338b5c80.png">
+
 # Lazy Props
 
 Haxe lazy (less typing) property definition macro
--------------------------------------------------
 
 Motivation described in the writeup here: [jcward.com/Less+Glue+via+Haxe+Macro+Lazy+Props](http://jcward.com/Less+Glue+via+Haxe+Macro+Lazy+Props)
 
