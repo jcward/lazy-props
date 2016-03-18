@@ -3,5 +3,18 @@
 -main Main
 -neko bin/test.n
 
+
 --next
--cmd neko bin/test.n
+-D LAZY_PROPS_DEBUG
+-cp src
+-cp test
+-main TestPrefix
+-neko bin/test.n
+
+
+--next
+-D LAZY_PROPS_DEBUG
+-cp src
+-cp test
+-main TestStar
+-neko bin/test.n
