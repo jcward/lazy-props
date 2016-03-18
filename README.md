@@ -7,7 +7,7 @@ Motivation described in the writeup here: [jcward.com/Less+Glue+via+Haxe+Macro+L
 Supported metadata tags:
 -------------------------
 
-All Lazy Props metadata tags go on the class constructor. The class itself must be prepended with the `@:build(LazyProps.build())` metadata to invoke the LazyProps macro. See the [example](https://github.com/jcward/lazy-props/blob/master/test/Main.hx).
+All Lazy Props metadata tags go on the class constructor. The class itself must be prepended with the `@:build(LazyProps.build())` metadata to invoke the Lazy Props macro. See the [example](https://github.com/jcward/lazy-props/blob/master/test/Main.hx).
 
 ```
 @:prop()
