@@ -13,10 +13,6 @@ Install from haxelib:
 
 `haxelib install lazyprops`
 
-Or for the development version:
-
-`haxelib git lazyprops https://github.com/jcward/lazy-props`
-
 In a nutshell
 -------------
 
