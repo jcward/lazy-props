@@ -2,11 +2,6 @@ import haxe.macro.Context;
 import haxe.macro.Expr;
 import haxe.macro.ExprTools;
 
-enum LPAccess {
-  LPPublic;
-  LPPrivate;
-}
-
 class LazyProps {
   macro static public function build():Array<Field> {
     var private_prefix:String = '';
