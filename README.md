@@ -28,6 +28,8 @@ All Lazy Props metadata tags go on the class constructor. The class itself must 
 @:propPrivateWriteOnly()
 @:propPrivateGetOnly()
 @:propPrivateSetOnly()
+@:publicPrefix()
+@:privatePrefix()
 ```
 
 @:prop syntax
@@ -47,7 +49,7 @@ type definition, and all the string constant names can be abbreviated. Examples 
 @:prop* syntax
 ---------------
 
-The syntax for the other metatags (e.g. `@:propPrivate('')`, `@:propPublic('')`, etc) is typically
+The syntax for the other property metatags (e.g. `@:propPrivate('')`, `@:propPublic('')`, etc) is typically
 a comma separated list with no spaces. There is also a `*` which catches all remaining constructor
 properties that haven't yet been defined. The `*` supports an ignore list (to avoid redeclarations
 in classes where a property is defined by a super class.)
@@ -68,3 +70,11 @@ Note that `privateReadOnly` and `privateGetOnly` uses the `never` access pattern
 which means that the vairable cannot be set, even from within the class itself. The constructor assignment
 inserted uses a dynamic assignment (e.g. `Reflect.setField(this, "name", name);` to avoid a compiler error,
 thus assigning the constructed value, but never allowing it to be changed.
+
+@:*prefix syntax
+---------------
+
+The `@:privatePrefix('')`, `@:publicPrefix('')` metadata tags allow your class members to use a prefixed naming convention compared to your constructor parameters. For example, with a private prefix of `@:privatePrefix('_')`, the constructor arg `width:Float` becomes the private member variable `_width:Float`.
+
+- The default prefix for both public and private is an empty string (no prefix.)
+- The metatags are defined in order, so these tags should go at the top of the list.
