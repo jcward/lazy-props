@@ -23,10 +23,20 @@ In a nutshell
 Lazy Props declares and assigns class properties automatically based on constructor:
 ![less_glue](https://cloud.githubusercontent.com/assets/2192439/13889013/f779165e-ed09-11e5-8ce4-0aa02a190623.jpg)
 
+Usage
+-----
+
+After installing from haxelib, add `-lib lazyprops` to your `build.hxml` file -- (library syntax varies for OpenFL, NME, Snow, Kha, etc.)
+
+Any classes to be parsed by Lazy Props must have the `@:build(LazyProps.build())` metadata before the class declaration. Then, all Lazy Props metadata tags go on the class constructor. See the [example](https://github.com/jcward/lazy-props/blob/master/test/Main.hx).
+
+Troubleshooting
+---------------
+
+First ensure the `@:build(LazyProps.build())` tag is present, the Lazy Props tag names are spelled properly, including the `@:`, and wihtout a trailing semi-colon, e.g. `@:propPrivate('*')`
+
 Supported metadata tags:
 -------------------------
-
-Your class(es) must have the `@:build(LazyProps.build())` metadata. Then, all Lazy Props metadata tags go on the class constructor. See the [example](https://github.com/jcward/lazy-props/blob/master/test/Main.hx).
 
 ```
 @:prop()
