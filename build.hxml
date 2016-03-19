@@ -18,3 +18,11 @@
 -cp test
 -main TestStar
 -neko bin/test.n
+
+
+--next
+-D LAZY_PROPS_DEBUG
+-cp src
+-cp test
+-main TestExt
+-neko bin/test.n
