@@ -33,7 +33,13 @@ Any classes to be parsed by Lazy Props must have the `@:build(LazyProps.build())
 Troubleshooting
 ---------------
 
-First ensure the `@:build(LazyProps.build())` tag is present, the Lazy Props tag names are spelled properly, including the `@:`, and wihtout a trailing semi-colon, e.g. `@:propPrivate('*')`
+I'm working on better error messages. In the meantime:
+
+- Ensure the `@:build(LazyProps.build())` tag is present on the class
+- Check the Lazy Props tag names are spelled properly, including the `@:`, and without a trailing semi-colon, e.g. `@:propPrivate('*')`
+- Verify the validity of the syntax (no stray spaces, commas, etc)
+- Verify the property names in the tags match the variable names in the constructor
+- Ensure the property isn't already defined (in the class or super classes)
 
 Supported metadata tags:
 -------------------------
