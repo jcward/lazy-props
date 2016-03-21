@@ -6,6 +6,12 @@ Haxe lazy (less typing) property definition macro
 
 Motivation described in the writeup here: [jcward.com/Less+Glue+via+Haxe+Macro+Lazy+Props](http://jcward.com/Less+Glue+via+Haxe+Macro+Lazy+Props)
 
+In a nutshell
+-------------
+
+Lazy Props declares and assigns class properties automatically based on constructor:
+![less_glue](https://cloud.githubusercontent.com/assets/2192439/13889013/f779165e-ed09-11e5-8ce4-0aa02a190623.jpg)
+
 Installation
 ------------
 
@@ -13,11 +19,9 @@ Install from haxelib:
 
 `haxelib install lazyprops`
 
-In a nutshell
--------------
+Or point haxelib at the latest version in git:
 
-Lazy Props declares and assigns class properties automatically based on constructor:
-![less_glue](https://cloud.githubusercontent.com/assets/2192439/13889013/f779165e-ed09-11e5-8ce4-0aa02a190623.jpg)
+`haxelib git lazyprops https://github.com/jcward/LazyProps master src`
 
 Usage
 -----
