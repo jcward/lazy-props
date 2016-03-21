@@ -2,14 +2,10 @@ import haxe.macro.Context;
 import haxe.macro.Expr;
 import haxe.macro.ExprTools;
 
-enum LPAccess {
-  LPPublic;
-  LPPrivate;
-}
-
 class LazyProps {
   macro static public function build():Array<Field> {
-
+    var private_prefix:String = '';
+    var public_prefix:String = '';
     var fields = Context.getBuildFields();
     var fields_to_add:Array<Field> = [];
     var names_added:Array<String> = [];
@@ -20,6 +16,7 @@ class LazyProps {
 
         function make_property(name:String, acc:Access, get:String=null, set:String=null)
         {
+          var prefix:String = acc==APrivate ? private_prefix : public_prefix;
           var exceptions = [];
           if (name.indexOf('*')==0) { // *-foo,bar
             var exc = name.split('-')[1];
@@ -39,27 +36,29 @@ class LazyProps {
           if (name=='*') return;
           if (t==null) throw('LazyProps: Constructor arg ${name} not found!');
 
-          if (get=="get") get = "get_"+name;
-          if (set=="set") set = "set_"+name;
+          if (get=="get") get = 'get_$prefix$name';
+          if (set=="set") set = 'set_$prefix$name';
 
-          //trace('Making property: $acc $name ($get, $set):$t');
+          if (Context.defined('LAZY_PROPS_DEBUG'))
+            trace('Making property: $acc $prefix$name ($get, $set):$t');
+
           names_added.push(name);
 
           // 2) insert expression to assign local to prop (unless set=='never')
           if (set!='never') {
             var construct:Expr = field.kind.getParameters()[0].expr;
             var exprs:Array<Expr> = construct.expr.getParameters()[0];
-            exprs.unshift(Context.parse('this.$name = $name', Context.currentPos()));
+            exprs.unshift(Context.parse('this.$prefix$name = $name', Context.currentPos()));
           } else {
             var construct:Expr = field.kind.getParameters()[0].expr;
             var exprs:Array<Expr> = construct.expr.getParameters()[0];
-            exprs.unshift(Context.parse('Reflect.setField(this, "$name", $name)', Context.currentPos()));
+            exprs.unshift(Context.parse('Reflect.setField(this, "$prefix$name", $name)', Context.currentPos()));
           }
 
           // 3) insert property definition into class fields
           if (get==null && set==null) {
             fields_to_add.push({
-              name: name,
+              name: prefix+name,
               doc: null,
               meta: [],
               access: [acc],
@@ -68,7 +67,7 @@ class LazyProps {
             });
           } else {
             fields_to_add.push({
-              name: name,
+              name: prefix+name,
               doc: null,
               meta: [ { name:":isVar", params:[], pos:Context.currentPos() }],
               access: [acc],
@@ -172,6 +171,12 @@ class LazyProps {
           else if (meta.name==":propPrivateSetOnly") {
             var def:String = ExprTools.getValue(meta.params[0]);
             for (name in def.split(',')) make_property(name, APrivate, 'never', 'set');
+          }
+          else if (meta.name==":privatePrefix") {
+            private_prefix = ExprTools.getValue(meta.params[0]);
+          }
+          else if (meta.name==":publicPrefix") {
+            public_prefix = ExprTools.getValue(meta.params[0]);
           }
         }
       }

@@ -1,0 +1,11 @@
+{
+	"name": "lazyprops",
+	"url": "http://github.com/jcward/lazy-props",
+	"license": "MIT",
+	"tags": ["macro", "cross"],
+	"description": "Haxe macro for generating property definitions and assignment automatically from the constructor.",
+	"version": "0.0.3",
+	"releasenote": "See recently closed issues in github.",
+	"contributors": [ "jeff.ward" ],
+	"dependencies": {}
+}
