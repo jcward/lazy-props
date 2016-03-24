@@ -1,11 +1,21 @@
 import haxe.macro.Context;
 import haxe.macro.Expr;
 import haxe.macro.ExprTools;
+import haxe.macro.ComplexTypeTools;
 
 class LazyProps {
   macro static public function build():Array<Field> {
     var private_prefix:String = '';
     var public_prefix:String = '';
+    var verbose = false;
+
+    function set_verbose() {
+      verbose = true;
+      trace("-- LazyProps on: "+Context.getLocalClass());
+    }
+
+    if (Context.defined('LAZY_PROPS_DEBUG')) set_verbose();
+
     var fields = Context.getBuildFields();
     var fields_to_add:Array<Field> = [];
     var names_added:Array<String> = [];
@@ -39,8 +49,11 @@ class LazyProps {
           if (get=="get") get = 'get_$prefix$name';
           if (set=="set") set = 'set_$prefix$name';
 
-          if (Context.defined('LAZY_PROPS_DEBUG'))
-            trace('Making property: $acc $prefix$name ($get, $set):$t');
+          if (verbose) {
+            var access = (acc+"").substr(1).toLowerCase();
+            var accessors = get==null && set==null ? "" : '($get,$set)';
+            trace('Making property: $access var $prefix$name $accessors:'+ComplexTypeTools.toString(t));
+          }
 
           names_added.push(name);
 
@@ -116,7 +129,9 @@ class LazyProps {
 
         // Scan meta tags for properties to build
         for (meta in field.meta) {
-          if (meta.name==":prop") { // Syntax: public width(get,set)
+          var meta_name:String = meta.name;
+          if (meta_name.indexOf(':')==0) meta_name = meta_name.substr(1);
+          if (meta_name=="prop") { // Syntax: public width(get,set)
             var def:String = ExprTools.getValue(meta.params[0]);
             if (def.indexOf('|')>=0) {
               for (prop in def.split('|')) parse_prop(prop);
@@ -124,61 +139,67 @@ class LazyProps {
               parse_prop(def);
             }
           }
-          else if (meta.name==":propPublic") {
+          else if (meta_name=="propPublic") {
             var def:String = ExprTools.getValue(meta.params[0]);
             for (name in def.split(',')) make_property(name, APublic);
           }
-          else if (meta.name==":propPrivate") {
+          else if (meta_name=="propPrivate") {
             var def:String = ExprTools.getValue(meta.params[0]);
             for (name in def.split(',')) make_property(name, APrivate);
           }
-          else if (meta.name==":propPublicGetSet") {
+          else if (meta_name=="propPublicGetSet") {
             var def:String = ExprTools.getValue(meta.params[0]);
             for (name in def.split(',')) make_property(name, APublic, 'get', 'set');
           }
-          else if (meta.name==":propPrivateGetSet") {
+          else if (meta_name=="propPrivateGetSet") {
             var def:String = ExprTools.getValue(meta.params[0]);
             for (name in def.split(',')) make_property(name, APrivate, 'get', 'set');
           }
-          else if (meta.name==":propPublicReadOnly") {
+          else if (meta_name=="propPublicReadOnly") {
             var def:String = ExprTools.getValue(meta.params[0]);
             for (name in def.split(',')) make_property(name, APublic, 'default', 'null');
           }
-          else if (meta.name==":propPublicWriteOnly") {
+          else if (meta_name=="propPublicWriteOnly") {
             var def:String = ExprTools.getValue(meta.params[0]);
             for (name in def.split(',')) make_property(name, APublic, 'null', 'default');
           }
-          else if (meta.name==":propPublicGetOnly") {
+          else if (meta_name=="propPublicGetOnly") {
             var def:String = ExprTools.getValue(meta.params[0]);
             for (name in def.split(',')) make_property(name, APublic, 'get', 'null');
           }
-          else if (meta.name==":propPublicSetOnly") {
+          else if (meta_name=="propPublicSetOnly") {
             var def:String = ExprTools.getValue(meta.params[0]);
             for (name in def.split(',')) make_property(name, APublic, 'null', 'set');
           }
-          else if (meta.name==":propPrivateReadOnly") {
+          else if (meta_name=="propPrivateReadOnly") {
             var def:String = ExprTools.getValue(meta.params[0]);
             for (name in def.split(',')) make_property(name, APrivate, 'default', 'never');
           }
-          else if (meta.name==":propPrivateWriteOnly") {
+          else if (meta_name=="propPrivateWriteOnly") {
             var def:String = ExprTools.getValue(meta.params[0]);
             for (name in def.split(',')) make_property(name, APrivate, 'never', 'default');
           }
-          else if (meta.name==":propPrivateGetOnly") {
+          else if (meta_name=="propPrivateGetOnly") {
             var def:String = ExprTools.getValue(meta.params[0]);
             for (name in def.split(',')) make_property(name, APrivate, 'get', 'never');
           }
-          else if (meta.name==":propPrivateSetOnly") {
+          else if (meta_name=="propPrivateSetOnly") {
             var def:String = ExprTools.getValue(meta.params[0]);
             for (name in def.split(',')) make_property(name, APrivate, 'never', 'set');
           }
-          else if (meta.name==":privatePrefix") {
+          else if (meta_name=="privatePrefix") {
             private_prefix = ExprTools.getValue(meta.params[0]);
           }
-          else if (meta.name==":publicPrefix") {
+          else if (meta_name=="publicPrefix") {
             public_prefix = ExprTools.getValue(meta.params[0]);
           }
+          else if (meta_name=="propVerbose") {
+            set_verbose();
+          }
         }
+
+        if (verbose) trace(" -- end --");
+        
       }
     }
 
